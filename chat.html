@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Pluma - Converse com nosso assistente de apoio emocional.">
+    <meta name="theme-color" content="#73f59f">
+    
+    <title>Pluma - Chat de Apoio</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-feather-alt"></i>
+                Pluma
+            </a>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <div class="chat-container">
+            <!-- Header do Chat -->
+            <div class="chat-header">
+                <div class="chat-avatar">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="chat-info">
+                    <h3>Pluma</h3>
+                    <div class="chat-status">
+                        <span class="status-dot"></span>
+                        <span>Sempre disponível</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aviso -->
+            <div class="chat-disclaimer">
+                <i class="fas fa-info-circle"></i>
+                <p>Este é um assistente de apoio emocional e <strong>não substitui</strong> ajuda profissional. 
+                   Em caso de emergência, ligue para o CVV: 188</p>
+            </div>
+
+            <!-- Área de Mensagens -->
+            <div class="chat-messages" id="chatMessages">
+                <!-- Mensagem de boas-vindas -->
+                <div class="welcome-message">
+                    <span class="welcome-icon">🌸</span>
+                    <h3 class="welcome-title">Olá! Eu sou a Pluma</h3>
+                    <p class="welcome-text">
+                        Estou aqui para te ouvir e oferecer apoio. 
+                        Você pode me contar como está se sentindo ou fazer perguntas sobre bem-estar emocional.
+                    </p>
+                    
+                    <!-- Ações Rápidas -->
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" data-message="Estou me sentindo ansioso">
+                            <i class="fas fa-heartbeat"></i>
+                            Ansiedade
+                        </button>
+                        <button class="quick-action-btn" data-message="Estou triste hoje">
+                            <i class="fas fa-cloud-rain"></i>
+                            Tristeza
+                        </button>
+                        <button class="quick-action-btn" data-message="Preciso de ajuda">
+                            <i class="fas fa-hands-helping"></i>
+                            Ajuda
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Indicador de digitando -->
+                <div class="typing-indicator" id="typingIndicator">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                </div>
+            </div>
+
+            <!-- Sugestões -->
+            <div class="chat-suggestions" id="chatSuggestions">
+                <button class="suggestion-chip" data-message="Como lidar com a ansiedade?">Ansiedade</button>
+                <button class="suggestion-chip" data-message="Técnicas de relaxamento">Relaxamento</button>
+                <button class="suggestion-chip" data-message="Preciso conversar">Conversar</button>
+                <button class="suggestion-chip" data-message="Links de ajuda">Ajuda</button>
+            </div>
+
+            <!-- Input de Mensagem -->
+            <div class="chat-input-container">
+                <textarea 
+                    class="chat-input" 
+                    id="chatInput" 
+                    placeholder="Digite sua mensagem..."
+                    rows="1"
+                ></textarea>
+                <button class="btn btn-primary send-btn" id="sendBtn" disabled aria-label="Enviar mensagem">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Navbar Inferior -->
+    <nav class="navbar" aria-label="Navegação principal">
+        <div class="navbar-content">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="humor.html" class="nav-item">
+                <i class="fas fa-smile"></i>
+                <span>Humor</span>
+            </a>
+            <a href="diario.html" class="nav-item">
+                <i class="fas fa-book"></i>
+                <span>Diário</span>
+            </a>
+            <a href="historico.html" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Histórico</span>
+            </a>
+            <a href="respirar.html" class="nav-item">
+                <i class="fas fa-wind"></i>
+                <span>Respirar</span>
+            </a>
+            <a href="config.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Config</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>

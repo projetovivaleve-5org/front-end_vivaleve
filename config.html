@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Pluma - Configurações e preferências do aplicativo.">
+    <meta name="theme-color" content="#73f59f">
+    
+    <title>Pluma - Configurações</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-feather-alt"></i>
+                Pluma
+            </a>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <!-- Header da Página -->
+        <section class="section fade-in">
+            <h1 class="section-title">Configurações</h1>
+            <p class="section-subtitle">Personalize sua experiência</p>
+        </section>
+
+        <!-- Perfil -->
+        <section class="card slide-up">
+            <div class="card-header">
+                <div class="card-icon verde">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div>
+                    <h3 class="card-title">Conta</h3>
+                    <p class="card-subtitle" id="userEmail">usuario@email.com</p>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="useful-links" style="box-shadow: none;">
+                <a href="#" class="useful-link" style="box-shadow: none;" id="editProfile">
+                    <i class="fas fa-edit" style="background: var(--cinza-claro); color: var(--texto-escuro);"></i>
+                    <div class="useful-link-content">
+                        <span class="useful-link-title">Editar Perfil</span>
+                        <span class="useful-link-description">Nome, email e foto</span>
+                    </div>
+                </a>
+                <a href="#" class="useful-link" style="box-shadow: none;" id="changePassword">
+                    <i class="fas fa-key" style="background: var(--cinza-claro); color: var(--texto-escuro);"></i>
+                    <div class="useful-link-content">
+                        <span class="useful-link-title">Alterar Senha</span>
+                        <span class="useful-link-description">Atualize sua senha</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Preferências -->
+        <section class="section">
+            <h2 class="section-title">Preferências</h2>
+            
+            <!-- Dark Mode -->
+            <div class="toggle-wrapper">
+                <div class="toggle-label">
+                    <i class="fas fa-moon"></i>
+                    <div>
+                        <span style="font-weight: 500;">Modo Escuro</span>
+                        <p style="font-size: 0.8rem; color: var(--cinza-medio);">Reduza a luminosidade</p>
+                    </div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <!-- Notificações -->
+            <div class="toggle-wrapper">
+                <div class="toggle-label">
+                    <i class="fas fa-bell"></i>
+                    <div>
+                        <span style="font-weight: 500;">Notificações</span>
+                        <p style="font-size: 0.8rem; color: var(--cinza-medio);">Lembretes diários</p>
+                    </div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="notificationsToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <!-- Sons -->
+            <div class="toggle-wrapper">
+                <div class="toggle-label">
+                    <i class="fas fa-volume-up"></i>
+                    <div>
+                        <span style="font-weight: 500;">Sons</span>
+                        <p style="font-size: 0.8rem; color: var(--cinza-medio);">Sons relaxantes</p>
+                    </div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="soundsToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Suporte -->
+        <section class="section">
+            <h2 class="section-title">Suporte</h2>
+            <div class="useful-links">
+                <a href="chat.html" class="useful-link">
+                    <i class="fas fa-comments"></i>
+                    <div class="useful-link-content">
+                        <span class="useful-link-title">Chat de Apoio</span>
+                        <span class="useful-link-description">Converse com a Pluma</span>
+                    </div>
+                </a>
+                <a href="#" class="useful-link" id="helpCenter">
+                    <i class="fas fa-question-circle"></i>
+                    <div class="useful-link-content">
+                        <span class="useful-link-title">Central de Ajuda</span>
+                        <span class="useful-link-description">Perguntas frequentes</span>
+                    </div>
+                </a>
+                <a href="#" class="useful-link" id="feedback">
+                    <i class="fas fa-heart"></i>
+                    <div class="useful-link-content">
+                        <span class="useful-link-title">Enviar Feedback</span>
+                        <span class="useful-link-description">Ajude-nos a melhorar</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Dados -->
+        <section class="section">
+            <h2 class="section-title">Seus Dados</h2>
+            <div class="useful-links">
+                <a href="#" class="useful-link" id="exportData">
+                    <i class="fas fa-download" style="background: var(--verde-claro);"></i>
+                    <div class="useful-link-content">
+                        <span class="useful-link-title">Exportar Dados</span>
+                        <span class="useful-link-description">Baixe seus registros</span>
+                    </div>
+                </a>
+                <a href="#" class="useful-link" id="clearData" style="border-left-color: #e74c3c;">
+                    <i class="fas fa-trash" style="background: #ffebee; color: #e74c3c;"></i>
+                    <div class="useful-link-content">
+                        <span class="useful-link-title" style="color: #e74c3c;">Limpar Dados</span>
+                        <span class="useful-link-description">Apagar todos os registros</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Sobre -->
+        <section class="section">
+            <h2 class="section-title">Sobre</h2>
+            <div class="card" style="text-align: center;">
+                <i class="fas fa-feather-alt" style="font-size: 2rem; color: var(--verde-claro); margin-bottom: var(--espacamento-md);"></i>
+                <h3 style="margin-bottom: var(--espacamento-sm);">Pluma</h3>
+                <p style="font-size: 0.85rem; color: var(--cinza-medio); margin-bottom: var(--espacamento-md);">
+                    Versão 1.0.0
+                </p>
+                <p style="font-size: 0.9rem; color: var(--texto-escuro); line-height: 1.6;">
+                    Uma plataforma de apoio emocional criada para ajudar você a cuidar da sua saúde mental.
+                </p>
+                <div class="divider"></div>
+                <div style="display: flex; justify-content: center; gap: var(--espacamento-lg);">
+                    <a href="#" style="color: var(--cinza-medio); text-decoration: none; font-size: 0.85rem;">Termos de Uso</a>
+                    <a href="#" style="color: var(--cinza-medio); text-decoration: none; font-size: 0.85rem;">Privacidade</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Logout -->
+        <section class="section">
+            <button class="btn btn-outline btn-block" id="logoutBtn" style="border-color: #e74c3c; color: #e74c3c;">
+                <i class="fas fa-sign-out-alt"></i>
+                Sair da Conta
+            </button>
+        </section>
+
+        <!-- Aviso -->
+        <section class="disclaimer" style="margin-top: var(--espacamento-lg);">
+            <i class="fas fa-heart"></i>
+            <p class="disclaimer-text">
+                Lembre-se: A Pluma é uma ferramenta de apoio e <strong>não substitui</strong> acompanhamento profissional.
+            </p>
+        </section>
+    </main>
+
+    <!-- Navbar Inferior -->
+    <nav class="navbar" aria-label="Navegação principal">
+        <div class="navbar-content">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="humor.html" class="nav-item">
+                <i class="fas fa-smile"></i>
+                <span>Humor</span>
+            </a>
+            <a href="diario.html" class="nav-item">
+                <i class="fas fa-book"></i>
+                <span>Diário</span>
+            </a>
+            <a href="historico.html" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Histórico</span>
+            </a>
+            <a href="respirar.html" class="nav-item">
+                <i class="fas fa-wind"></i>
+                <span>Respirar</span>
+            </a>
+            <a href="config.html" class="nav-item active" aria-current="page">
+                <i class="fas fa-cog"></i>
+                <span>Config</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script>
+        // Configurações da página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            darkModeToggle.checked = document.documentElement.getAttribute('data-theme') === 'dark';
+            
+            darkModeToggle.addEventListener('change', function() {
+                const theme = this.checked ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('pluma_theme', theme);
+            });
+
+            // Notificações Toggle
+            const notificationsToggle = document.getElementById('notificationsToggle');
+            notificationsToggle.checked = localStorage.getItem('pluma_notifications') !== 'false';
+            
+            notificationsToggle.addEventListener('change', function() {
+                localStorage.setItem('pluma_notifications', this.checked);
+            });
+
+            // Sons Toggle
+            const soundsToggle = document.getElementById('soundsToggle');
+            soundsToggle.checked = localStorage.getItem('pluma_sounds') !== 'false';
+            
+            soundsToggle.addEventListener('change', function() {
+                localStorage.setItem('pluma_sounds', this.checked);
+            });
+
+            // Carregar email do usuário
+            const user = JSON.parse(localStorage.getItem('pluma_user') || '{}');
+            if (user.email) {
+                document.getElementById('userEmail').textContent = user.email;
+            }
+
+            // Exportar dados
+            document.getElementById('exportData').addEventListener('click', function(e) {
+                e.preventDefault();
+                const data = {
+                    moods: JSON.parse(localStorage.getItem('pluma_moods') || '[]'),
+                    diary: JSON.parse(localStorage.getItem('pluma_diary') || '[]'),
+                    breathing: JSON.parse(localStorage.getItem('pluma_breathing') || '{}')
+                };
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'pluma_dados_' + new Date().toISOString().split('T')[0] + '.json';
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                alert('Dados exportados com sucesso!');
+            });
+
+            // Limpar dados
+            document.getElementById('clearData').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Tem certeza que deseja apagar todos os seus dados? Esta ação não pode ser desfeita.')) {
+                    localStorage.removeItem('pluma_moods');
+                    localStorage.removeItem('pluma_diary');
+                    localStorage.removeItem('pluma_breathing');
+                    alert('Dados apagados com sucesso!');
+                    location.reload();
+                }
+            });
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                if (confirm('Deseja realmente sair?')) {
+                    localStorage.removeItem('pluma_user');
+                    localStorage.removeItem('pluma_logged_in');
+                    window.location.href = 'login.html';
+                }
+            });
+
+            // Feedback
+            document.getElementById('feedback').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Obrigado pelo interesse! Em breve disponibilizaremos um formulário de feedback.');
+            });
+
+            // Central de Ajuda
+            document.getElementById('helpCenter').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Central de Ajuda em desenvolvimento. Por enquanto, use o Chat de Apoio!');
+            });
+
+            // Editar Perfil
+            document.getElementById('editProfile').addEventListener('click', function(e) {
+                e.preventDefault();
+                const newName = prompt('Digite seu nome:', user.name || '');
+                if (newName !== null) {
+                    user.name = newName;
+                    localStorage.setItem('pluma_user', JSON.stringify(user));
+                    alert('Perfil atualizado!');
+                }
+            });
+
+            // Alterar Senha
+            document.getElementById('changePassword').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Funcionalidade de alteração de senha em desenvolvimento.');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,383 @@
+/* ============================================
+   PLUMA - Estilos da Tela de Humor
+   ============================================ */
+
+/* Container Principal */
+.humor-container {
+    padding-top: var(--espacamento-md);
+}
+
+/* Pergunta do Dia */
+.humor-question {
+    text-align: center;
+    margin-bottom: var(--espacamento-xl);
+}
+
+.humor-question h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--texto-escuro);
+    margin-bottom: var(--espacamento-sm);
+}
+
+.humor-question p {
+    color: var(--cinza-medio);
+    font-size: 0.95rem;
+}
+
+/* Data Atual */
+.current-date {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espacamento-sm);
+    background: var(--branco);
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    border-radius: var(--borda-radius-xl);
+    font-size: 0.9rem;
+    color: var(--texto-escuro);
+    box-shadow: 0 2px 10px var(--sombra);
+    margin-bottom: var(--espacamento-lg);
+}
+
+.current-date i {
+    color: var(--verde-claro);
+}
+
+/* Grid de Emoções */
+.emotions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--espacamento-md);
+    margin-bottom: var(--espacamento-xl);
+}
+
+.emotion-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--espacamento-lg);
+    background: var(--branco);
+    border: 3px solid transparent;
+    border-radius: var(--borda-radius-lg);
+    cursor: pointer;
+    transition: all var(--transicao-rapida);
+    box-shadow: 0 4px 15px var(--sombra);
+}
+
+.emotion-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--sombra);
+}
+
+.emotion-card.selected {
+    border-color: var(--verde-claro);
+    background: linear-gradient(135deg, rgba(115, 245, 159, 0.1), rgba(243, 215, 255, 0.1));
+}
+
+.emotion-card.selected .emotion-icon {
+    transform: scale(1.1);
+}
+
+.emotion-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--espacamento-sm);
+    transition: transform var(--transicao-rapida);
+}
+
+.emotion-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--texto-escuro);
+    text-align: center;
+}
+
+/* Cores das Emoções */
+.emotion-card[data-emotion="otimo"] .emotion-icon { color: #4CAF50; }
+.emotion-card[data-emotion="bem"] .emotion-icon { color: #8BC34A; }
+.emotion-card[data-emotion="mais-ou-menos"] .emotion-icon { color: #FFC107; }
+.emotion-card[data-emotion="mal"] .emotion-icon { color: #FF9800; }
+.emotion-card[data-emotion="depressivo"] .emotion-icon { color: #9C27B0; }
+.emotion-card[data-emotion="ansioso"] .emotion-icon { color: #E91E63; }
+
+/* Seção de Nota */
+.note-section {
+    margin-bottom: var(--espacamento-xl);
+}
+
+.note-section .form-label {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-sm);
+    margin-bottom: var(--espacamento-md);
+}
+
+.note-section .form-label i {
+    color: var(--verde-claro);
+}
+
+.note-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Seção de Upload */
+.upload-section {
+    margin-bottom: var(--espacamento-xl);
+}
+
+.upload-area {
+    border: 2px dashed var(--cinza-claro);
+    border-radius: var(--borda-radius-lg);
+    padding: var(--espacamento-xl);
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transicao-rapida);
+    background: var(--branco);
+}
+
+.upload-area:hover {
+    border-color: var(--verde-claro);
+    background: rgba(115, 245, 159, 0.05);
+}
+
+.upload-area.dragover {
+    border-color: var(--verde-claro);
+    background: rgba(115, 245, 159, 0.1);
+}
+
+.upload-area i {
+    font-size: 2.5rem;
+    color: var(--cinza-medio);
+    margin-bottom: var(--espacamento-md);
+}
+
+.upload-text {
+    font-size: 0.95rem;
+    color: var(--texto-escuro);
+    margin-bottom: var(--espacamento-xs);
+}
+
+.upload-hint {
+    font-size: 0.8rem;
+    color: var(--cinza-medio);
+}
+
+.upload-preview {
+    display: none;
+    margin-top: var(--espacamento-md);
+    position: relative;
+}
+
+.upload-preview.visible {
+    display: block;
+}
+
+.upload-preview img {
+    max-width: 100%;
+    border-radius: var(--borda-radius-md);
+    box-shadow: 0 4px 15px var(--sombra);
+}
+
+.remove-image {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Seção de Atividades */
+.activities-section {
+    margin-bottom: var(--espacamento-xl);
+}
+
+.activities-section .form-label {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-sm);
+    margin-bottom: var(--espacamento-md);
+}
+
+.activities-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacamento-sm);
+}
+
+.activity-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espacamento-sm);
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    background: var(--branco);
+    border: 2px solid var(--cinza-claro);
+    border-radius: var(--borda-radius-xl);
+    cursor: pointer;
+    transition: all var(--transicao-rapida);
+    font-size: 0.85rem;
+    color: var(--texto-escuro);
+}
+
+.activity-tag:hover {
+    border-color: var(--verde-claro);
+}
+
+.activity-tag.selected {
+    background: var(--verde-claro);
+    border-color: var(--verde-claro);
+    color: var(--branco);
+}
+
+.activity-tag i {
+    font-size: 1rem;
+}
+
+/* Botão Salvar */
+.save-section {
+    padding: var(--espacamento-lg) 0;
+}
+
+.save-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.save-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.save-btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Confirmação de Salvamento */
+.save-confirmation {
+    display: none;
+    text-align: center;
+    padding: var(--espacamento-xl);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.save-confirmation.visible {
+    display: block;
+}
+
+.save-confirmation i {
+    font-size: 4rem;
+    color: var(--verde-claro);
+    margin-bottom: var(--espacamento-md);
+    animation: bounce 0.5s ease-out;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.save-confirmation h3 {
+    font-size: 1.25rem;
+    color: var(--texto-escuro);
+    margin-bottom: var(--espacamento-sm);
+}
+
+.save-confirmation p {
+    color: var(--cinza-medio);
+    font-size: 0.95rem;
+}
+
+/* Histórico Rápido */
+.quick-history {
+    margin-top: var(--espacamento-xl);
+}
+
+.quick-history-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--texto-escuro);
+    margin-bottom: var(--espacamento-md);
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-sm);
+}
+
+.quick-history-title i {
+    color: var(--verde-claro);
+}
+
+.quick-history-items {
+    display: flex;
+    gap: var(--espacamento-sm);
+    overflow-x: auto;
+    padding-bottom: var(--espacamento-sm);
+    -webkit-overflow-scrolling: touch;
+}
+
+.quick-history-item {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--espacamento-md);
+    background: var(--branco);
+    border-radius: var(--borda-radius-md);
+    min-width: 70px;
+    box-shadow: 0 2px 10px var(--sombra);
+}
+
+.quick-history-item .emotion-icon {
+    font-size: 1.5rem;
+    margin-bottom: var(--espacamento-xs);
+}
+
+.quick-history-item .date {
+    font-size: 0.7rem;
+    color: var(--cinza-medio);
+}
+
+/* Responsividade */
+@media screen and (max-width: 400px) {
+    .emotions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .emotion-icon {
+        font-size: 2rem;
+    }
+    
+    .emotion-label {
+        font-size: 0.75rem;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .emotions-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    
+    .emotion-card {
+        padding: var(--espacamento-md);
+    }
+    
+    .humor-question h2 {
+        font-size: 1.75rem;
+    }
+}

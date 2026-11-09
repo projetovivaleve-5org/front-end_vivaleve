@@ -1,0 +1,425 @@
+/* ============================================
+   PLUMA - Estilos da Tela de Respiração
+   ============================================ */
+
+/* Container Principal */
+.breathing-container {
+    min-height: calc(100vh - 160px);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.breathing-header {
+    text-align: center;
+    margin-bottom: var(--espacamento-xl);
+}
+
+.breathing-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--texto-escuro);
+    margin-bottom: var(--espacamento-sm);
+}
+
+.breathing-header p {
+    color: var(--cinza-medio);
+    font-size: 0.95rem;
+}
+
+/* Área do Exercício */
+.breathing-exercise {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--espacamento-xl) 0;
+}
+
+/* Círculo de Respiração */
+.breathing-circle-container {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    margin-bottom: var(--espacamento-xl);
+}
+
+.breathing-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--verde-claro), var(--lilas-claro));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 50px rgba(115, 245, 159, 0.4);
+    transition: transform 4s ease-in-out;
+}
+
+.breathing-circle.inhale {
+    animation: breatheIn 4s ease-in-out forwards;
+}
+
+.breathing-circle.hold {
+    transform: scale(1.2);
+}
+
+.breathing-circle.exhale {
+    animation: breatheOut 8s ease-in-out forwards;
+}
+
+@keyframes breatheIn {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
+
+@keyframes breatheOut {
+    from { transform: scale(1.2); }
+    to { transform: scale(1); }
+}
+
+.breathing-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--branco);
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.breathing-timer {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--branco);
+    margin-top: var(--espacamento-sm);
+}
+
+/* Anel de Progresso */
+.progress-ring {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+}
+
+.progress-ring-circle {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-width: 4;
+}
+
+.progress-ring-progress {
+    fill: transparent;
+    stroke: var(--branco);
+    stroke-width: 4;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    transition: stroke-dashoffset 1s linear;
+}
+
+/* Instrução Atual */
+.breathing-instruction {
+    text-align: center;
+    margin-bottom: var(--espacamento-xl);
+}
+
+.instruction-label {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--verde-escuro);
+    margin-bottom: var(--espacamento-sm);
+}
+
+.instruction-description {
+    font-size: 0.95rem;
+    color: var(--cinza-medio);
+}
+
+/* Controles */
+.breathing-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--espacamento-md);
+}
+
+.start-btn {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 10px 30px rgba(115, 245, 159, 0.4);
+}
+
+.start-btn i {
+    margin-left: 4px;
+}
+
+.start-btn.playing i {
+    margin-left: 0;
+}
+
+.reset-btn {
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    background: transparent;
+    border: none;
+    color: var(--cinza-medio);
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-sm);
+}
+
+.reset-btn:hover {
+    color: var(--texto-escuro);
+}
+
+/* Técnica Info */
+.technique-info {
+    background: var(--branco);
+    border-radius: var(--borda-radius-lg);
+    padding: var(--espacamento-lg);
+    margin-top: var(--espacamento-xl);
+    box-shadow: 0 4px 15px var(--sombra);
+}
+
+.technique-title {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-sm);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--texto-escuro);
+    margin-bottom: var(--espacamento-md);
+}
+
+.technique-title i {
+    color: var(--verde-claro);
+}
+
+.technique-steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacamento-md);
+}
+
+.technique-step {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-md);
+}
+
+.step-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.step-number.inhale {
+    background: linear-gradient(135deg, rgba(115, 245, 159, 0.3), rgba(115, 245, 159, 0.1));
+    color: var(--verde-escuro);
+}
+
+.step-number.hold {
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.3), rgba(52, 152, 219, 0.1));
+    color: #3498db;
+}
+
+.step-number.exhale {
+    background: linear-gradient(135deg, rgba(243, 215, 255, 0.5), rgba(243, 215, 255, 0.2));
+    color: var(--lilas-escuro);
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-label {
+    font-weight: 500;
+    color: var(--texto-escuro);
+    margin-bottom: 2px;
+}
+
+.step-duration {
+    font-size: 0.85rem;
+    color: var(--cinza-medio);
+}
+
+/* Estatísticas */
+.breathing-stats {
+    background: var(--branco);
+    border-radius: var(--borda-radius-lg);
+    padding: var(--espacamento-lg);
+    margin-top: var(--espacamento-lg);
+    box-shadow: 0 4px 15px var(--sombra);
+}
+
+.stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--espacamento-md);
+}
+
+.stats-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--texto-escuro);
+}
+
+.stats-reset {
+    font-size: 0.8rem;
+    color: var(--cinza-medio);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.stats-reset:hover {
+    color: var(--verde-escuro);
+}
+
+.stats-row {
+    display: flex;
+    gap: var(--espacamento-md);
+}
+
+.stat-item {
+    flex: 1;
+    text-align: center;
+    padding: var(--espacamento-md);
+    background: var(--fundo-suave);
+    border-radius: var(--borda-radius-md);
+}
+
+.stat-item-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--verde-escuro);
+}
+
+.stat-item-label {
+    font-size: 0.8rem;
+    color: var(--cinza-medio);
+}
+
+/* Som de Fundo */
+.sound-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espacamento-md);
+    margin-top: var(--espacamento-lg);
+    padding: var(--espacamento-md);
+    background: var(--branco);
+    border-radius: var(--borda-radius-lg);
+    box-shadow: 0 4px 15px var(--sombra);
+}
+
+.sound-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-sm);
+    font-size: 0.95rem;
+    color: var(--texto-escuro);
+}
+
+.sound-toggle-label i {
+    color: var(--verde-claro);
+}
+
+/* Benefícios */
+.benefits-section {
+    margin-top: var(--espacamento-xl);
+}
+
+.benefits-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--texto-escuro);
+    margin-bottom: var(--espacamento-md);
+    text-align: center;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--espacamento-md);
+}
+
+.benefit-card {
+    background: var(--branco);
+    border-radius: var(--borda-radius-md);
+    padding: var(--espacamento-md);
+    text-align: center;
+    box-shadow: 0 2px 10px var(--sombra);
+}
+
+.benefit-icon {
+    font-size: 1.5rem;
+    margin-bottom: var(--espacamento-sm);
+}
+
+.benefit-text {
+    font-size: 0.85rem;
+    color: var(--texto-escuro);
+}
+
+/* Responsividade */
+@media screen and (max-width: 350px) {
+    .breathing-circle-container {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .breathing-timer {
+        font-size: 2.5rem;
+    }
+    
+    .start-btn {
+        width: 70px;
+        height: 70px;
+        font-size: 1.25rem;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .breathing-circle-container {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .breathing-timer {
+        font-size: 4rem;
+    }
+    
+    .instruction-label {
+        font-size: 2rem;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Animação suave quando não está respirando */
+.breathing-circle.idle {
+    animation: pulse-soft 3s ease-in-out infinite;
+}
+
+@keyframes pulse-soft {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+}

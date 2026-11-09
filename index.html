@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Pluma - Plataforma de apoio emocional e bem-estar. Registre seu humor, escreva seu diário e pratique técnicas de respiração.">
+    <meta name="theme-color" content="#73f59f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <title>Pluma - Apoio Emocional</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="logo">🪶 Pluma</div>
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-feather-alt"></i>
+                Pluma
+            </a>
+            <button class="btn btn-sm btn-outline" id="themeToggle" aria-label="Alternar tema">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <!-- Saudação -->
+        <section class="section fade-in">
+            <h1 class="section-title" id="greeting">Olá! 👋</h1>
+            <p class="section-subtitle">Como você está se sentindo hoje?</p>
+        </section>
+
+        <!-- Mensagem Motivacional -->
+        <section class="motivational-box slide-up">
+            <p class="motivational-text" id="motivationalQuote">"Cada dia é uma nova oportunidade para cuidar de si mesmo."</p>
+            <p class="motivational-author" id="motivationalAuthor">— Pluma</p>
+        </section>
+
+        <!-- Acesso Rápido -->
+        <section class="section">
+            <h2 class="section-title">Acesso Rápido</h2>
+            <div class="cards-grid">
+                <a href="humor.html" class="card">
+                    <div class="card-header">
+                        <div class="card-icon verde">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Registrar Humor</h3>
+                    <p class="card-subtitle">Como você está hoje?</p>
+                </a>
+                
+                <a href="diario.html" class="card">
+                    <div class="card-header">
+                        <div class="card-icon lilas">
+                            <i class="fas fa-book"></i>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Diário</h3>
+                    <p class="card-subtitle">Escreva seus pensamentos</p>
+                </a>
+                
+                <a href="respirar.html" class="card">
+                    <div class="card-header">
+                        <div class="card-icon verde">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Respirar</h3>
+                    <p class="card-subtitle">Exercícios de relaxamento</p>
+                </a>
+                
+                <a href="chat.html" class="card">
+                    <div class="card-header">
+                        <div class="card-icon lilas">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Conversar</h3>
+                    <p class="card-subtitle">Fale com a Pluma</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Aviso Importante -->
+        <section class="disclaimer">
+            <i class="fas fa-info-circle"></i>
+            <p class="disclaimer-text">
+                A Pluma é uma ferramenta de apoio emocional e <strong>não substitui</strong> acompanhamento profissional. 
+                Se você está passando por uma crise, procure ajuda especializada.
+            </p>
+        </section>
+
+        <!-- Links Úteis -->
+        <section class="section">
+            <h2 class="section-title">Links Úteis</h2>
+            <div class="useful-links">
+                <a href="https://www.cvv.org.br/" target="_blank" rel="noopener noreferrer" class="useful-link">
+                    <i class="fas fa-phone-alt"></i>
+                    <div class="useful-link-content">
+                        <span class="useful-link-title">CVV - Ligue 188</span>
+                        <span class="useful-link-description">Centro de Valorização da Vida - 24 horas</span>
+                    </div>
+                </a>
+                
+                <a href="https://www.doctoralia.com.br/psicologos" target="_blank" rel="noopener noreferrer" class="useful-link">
+                    <i class="fas fa-user-md"></i>
+                    <div class="useful-link-content">
+                        <span class="useful-link-title">Encontre um Psicólogo</span>
+                        <span class="useful-link-description">Profissionais perto de você</span>
+                    </div>
+                </a>
+                
+                <a href="https://www.vittude.com/" target="_blank" rel="noopener noreferrer" class="useful-link">
+                    <i class="fas fa-heart"></i>
+                    <div class="useful-link-content">
+                        <span class="useful-link-title">Vittude</span>
+                        <span class="useful-link-description">Terapia online acessível</span>
+                    </div>
+                </a>
+                
+                <a href="https://www.minhavida.com.br/bem-estar/tudo-sobre/17115-ansiedade" target="_blank" rel="noopener noreferrer" class="useful-link">
+                    <i class="fas fa-book-open"></i>
+                    <div class="useful-link-content">
+                        <span class="useful-link-title">Sobre Ansiedade</span>
+                        <span class="useful-link-description">Entenda e aprenda a lidar</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Conteúdo Informativo -->
+        <section class="section">
+            <h2 class="section-title">Cuide da sua Mente</h2>
+            
+            <div class="card">
+                <h3 class="card-title">O que é Ansiedade?</h3>
+                <p style="font-size: 0.9rem; color: var(--cinza-medio); line-height: 1.6;">
+                    A ansiedade é uma resposta natural do corpo ao estresse. É uma sensação de medo ou apreensão 
+                    sobre o que está por vir. É importante reconhecer quando a ansiedade se torna excessiva e 
+                    buscar formas saudáveis de lidar com ela.
+                </p>
+            </div>
+            
+            <div class="alert alert-info">
+                <i class="fas fa-lightbulb"></i>
+                <div class="alert-content">
+                    <p class="alert-title">Dica do dia</p>
+                    <p class="alert-text">Tire 5 minutos para praticar respiração consciente. Sua mente agradece!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Navbar Inferior -->
+    <nav class="navbar" aria-label="Navegação principal">
+        <div class="navbar-content">
+            <a href="index.html" class="nav-item active" aria-current="page">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="humor.html" class="nav-item">
+                <i class="fas fa-smile"></i>
+                <span>Humor</span>
+            </a>
+            <a href="diario.html" class="nav-item">
+                <i class="fas fa-book"></i>
+                <span>Diário</span>
+            </a>
+            <a href="historico.html" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Histórico</span>
+            </a>
+            <a href="respirar.html" class="nav-item">
+                <i class="fas fa-wind"></i>
+                <span>Respirar</span>
+            </a>
+            <a href="config.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Config</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+/* ============================================
+   PLUMA - Estilos da Tela de Login
+   ============================================ */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, var(--fundo-suave) 0%, var(--branco) 100%);
+    padding-bottom: 0;
+}
+
+.login-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--espacamento-xl);
+    max-width: 450px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Logo e Header */
+.login-header {
+    text-align: center;
+    margin-bottom: var(--espacamento-xxl);
+}
+
+.login-logo {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto var(--espacamento-lg);
+    background: linear-gradient(135deg, var(--verde-claro), var(--lilas-claro));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 40px rgba(115, 245, 159, 0.3);
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.login-logo i {
+    font-size: 3rem;
+    color: var(--branco);
+}
+
+.login-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--texto-escuro);
+    margin-bottom: var(--espacamento-sm);
+}
+
+.login-subtitle {
+    font-size: 1rem;
+    color: var(--cinza-medio);
+    line-height: 1.5;
+}
+
+/* Formulário */
+.login-form {
+    margin-bottom: var(--espacamento-lg);
+}
+
+.login-form .form-group {
+    margin-bottom: var(--espacamento-lg);
+}
+
+.login-form .form-input {
+    padding: var(--espacamento-md) var(--espacamento-md) var(--espacamento-md) 50px;
+    border-radius: var(--borda-radius-lg);
+    font-size: 1rem;
+}
+
+.login-form .input-icon-wrapper i {
+    left: 18px;
+    font-size: 1.1rem;
+}
+
+/* Opções de Login */
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--espacamento-lg);
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: var(--espacamento-sm);
+    cursor: pointer;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--verde-claro);
+    cursor: pointer;
+}
+
+.remember-me span {
+    font-size: 0.9rem;
+    color: var(--texto-escuro);
+}
+
+.forgot-password {
+    font-size: 0.9rem;
+    color: var(--verde-escuro);
+    text-decoration: none;
+    transition: color var(--transicao-rapida);
+}
+
+.forgot-password:hover {
+    color: var(--lilas-escuro);
+    text-decoration: underline;
+}
+
+/* Botão de Login */
+.login-btn {
+    width: 100%;
+    padding: var(--espacamento-md) var(--espacamento-xl);
+    border-radius: var(--borda-radius-xl);
+    font-size: 1.1rem;
+    margin-bottom: var(--espacamento-lg);
+}
+
+/* Divisor */
+.login-divider {
+    display: flex;
+    align-items: center;
+    margin: var(--espacamento-lg) 0;
+}
+
+.login-divider span {
+    flex: 1;
+    height: 1px;
+    background: var(--cinza-claro);
+}
+
+.login-divider p {
+    padding: 0 var(--espacamento-md);
+    color: var(--cinza-medio);
+    font-size: 0.85rem;
+}
+
+/* Login Social */
+.social-login {
+    display: flex;
+    gap: var(--espacamento-md);
+    margin-bottom: var(--espacamento-lg);
+}
+
+.social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espacamento-sm);
+    padding: var(--espacamento-md);
+    border: 2px solid var(--cinza-claro);
+    border-radius: var(--borda-radius-lg);
+    background: var(--branco);
+    color: var(--texto-escuro);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transicao-rapida);
+}
+
+.social-btn:hover {
+    border-color: var(--verde-claro);
+    background: rgba(115, 245, 159, 0.05);
+}
+
+.social-btn i {
+    font-size: 1.25rem;
+}
+
+.social-btn.google i {
+    color: #DB4437;
+}
+
+.social-btn.apple i {
+    color: #000000;
+}
+
+/* Link de Cadastro */
+.register-link {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--texto-escuro);
+}
+
+.register-link a {
+    color: var(--verde-escuro);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Animação de entrada */
+.login-container {
+    animation: slideUp 0.6s ease-out;
+}
+
+/* Password Toggle */
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--cinza-medio);
+    cursor: pointer;
+    padding: var(--espacamento-sm);
+}
+
+.password-toggle:hover {
+    color: var(--verde-escuro);
+}
+
+/* Erro de Validação */
+.form-error {
+    display: none;
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-top: var(--espacamento-xs);
+    padding-left: var(--espacamento-sm);
+}
+
+.form-error.visible {
+    display: block;
+    animation: shake 0.3s ease-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.form-input.error {
+    border-color: #e74c3c;
+}
+
+/* Loading State */
+.login-btn.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.login-btn.loading::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top-color: var(--branco);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-left: var(--espacamento-sm);
+}
+
+/* Responsividade */
+@media screen and (max-width: 480px) {
+    .login-container {
+        padding: var(--espacamento-md);
+    }
+    
+    .login-logo {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .login-logo i {
+        font-size: 2.5rem;
+    }
+    
+    .login-title {
+        font-size: 1.75rem;
+    }
+    
+    .social-login {
+        flex-direction: column;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .login-container {
+        padding: var(--espacamento-xxl);
+    }
+    
+    .login-logo {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .login-logo i {
+        font-size: 3.5rem;
+    }
+    
+    .login-title {
+        font-size: 2.25rem;
+    }
+}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Pluma - Acompanhe sua evolução emocional com estatísticas e gráficos.">
+    <meta name="theme-color" content="#73f59f">
+    
+    <title>Pluma - Histórico Emocional</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/historico.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-feather-alt"></i>
+                Pluma
+            </a>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <!-- Header do Histórico -->
+        <section class="history-header fade-in">
+            <h2>Seu Histórico</h2>
+            <p>Acompanhe sua jornada emocional</p>
+        </section>
+
+        <!-- Cards de Estatísticas -->
+        <section class="stats-grid slide-up">
+            <div class="stat-card">
+                <div class="stat-icon verde">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <span class="stat-value" id="totalRecords">0</span>
+                <span class="stat-label">Registros</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon lilas">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <span class="stat-value" id="streakDays">0</span>
+                <span class="stat-label">Dias seguidos</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon amarelo">
+                    <i class="fas fa-star"></i>
+                </div>
+                <span class="stat-value" id="bestStreak">0</span>
+                <span class="stat-label">Melhor sequência</span>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon azul">
+                    <i class="fas fa-wind"></i>
+                </div>
+                <span class="stat-value" id="breathingSessions">0</span>
+                <span class="stat-label">Sessões respiração</span>
+            </div>
+        </section>
+
+        <!-- Sequência de Uso -->
+        <section class="streak-card">
+            <span class="streak-icon">🔥</span>
+            <span class="streak-value" id="currentStreak">0</span>
+            <span class="streak-label">dias de sequência</span>
+            <p class="streak-message" id="streakMessage">Continue assim!</p>
+        </section>
+
+        <!-- Gráfico de Humor -->
+        <section class="charts-section">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">
+                        <i class="fas fa-chart-line"></i>
+                        Evolução do Humor
+                    </h3>
+                    <div class="chart-period">
+                        <button class="period-btn active" data-period="week">7 dias</button>
+                        <button class="period-btn" data-period="month">30 dias</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="moodChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Gráfico de Emoções -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">
+                        <i class="fas fa-chart-pie"></i>
+                        Distribuição de Emoções
+                    </h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="emotionsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Emoção Predominante -->
+        <section class="dominant-emotion">
+            <div class="dominant-emotion-header">
+                <h3>Emoção Predominante</h3>
+            </div>
+            <span class="dominant-emotion-icon" id="dominantIcon">😊</span>
+            <span class="dominant-emotion-label" id="dominantLabel">Bem</span>
+            <span class="dominant-emotion-percent" id="dominantPercent">0% dos registros</span>
+
+            <div class="emotions-breakdown" id="emotionsBreakdown">
+                <!-- Barras de progresso serão inseridas via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Histórico de Registros -->
+        <section class="history-list">
+            <div class="history-list-header">
+                <h3>Registros Recentes</h3>
+                <a href="#" class="view-all-btn" id="viewAllBtn">Ver todos</a>
+            </div>
+            <div class="history-items" id="historyItems">
+                <!-- Itens serão inseridos via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Estado Vazio -->
+        <div class="history-empty" id="historyEmpty" style="display: none;">
+            <i class="fas fa-chart-bar"></i>
+            <h3>Nenhum registro ainda</h3>
+            <p>Comece a registrar seu humor para ver suas estatísticas</p>
+            <a href="humor.html" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Registrar Humor
+            </a>
+        </div>
+    </main>
+
+    <!-- Navbar Inferior -->
+    <nav class="navbar" aria-label="Navegação principal">
+        <div class="navbar-content">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="humor.html" class="nav-item">
+                <i class="fas fa-smile"></i>
+                <span>Humor</span>
+            </a>
+            <a href="diario.html" class="nav-item">
+                <i class="fas fa-book"></i>
+                <span>Diário</span>
+            </a>
+            <a href="historico.html" class="nav-item active" aria-current="page">
+                <i class="fas fa-chart-line"></i>
+                <span>Histórico</span>
+            </a>
+            <a href="respirar.html" class="nav-item">
+                <i class="fas fa-wind"></i>
+                <span>Respirar</span>
+            </a>
+            <a href="config.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Config</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/historico.js"></script>
+</body>
+</html>

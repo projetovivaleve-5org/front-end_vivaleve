@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Pluma - Pratique técnicas de respiração para relaxamento e controle da ansiedade.">
+    <meta name="theme-color" content="#73f59f">
+    
+    <title>Pluma - Exercícios de Respiração</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/respirar.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-feather-alt"></i>
+                Pluma
+            </a>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <div class="breathing-container">
+            <!-- Header -->
+            <section class="breathing-header fade-in">
+                <h2>Exercício de Respiração</h2>
+                <p>Técnica 4-7-8 para relaxamento</p>
+            </section>
+
+            <!-- Área do Exercício -->
+            <section class="breathing-exercise">
+                <!-- Círculo de Respiração -->
+                <div class="breathing-circle-container">
+                    <svg class="progress-ring" viewBox="0 0 270 270">
+                        <circle class="progress-ring-circle" cx="135" cy="135" r="130"></circle>
+                        <circle class="progress-ring-progress" id="progressRing" cx="135" cy="135" r="130" 
+                                stroke-dasharray="817" stroke-dashoffset="817"></circle>
+                    </svg>
+                    <div class="breathing-circle idle" id="breathingCircle">
+                        <div>
+                            <span class="breathing-text" id="breathingText">Pronto?</span>
+                            <span class="breathing-timer" id="breathingTimer"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instrução Atual -->
+                <div class="breathing-instruction">
+                    <span class="instruction-label" id="instructionLabel">Toque para começar</span>
+                    <span class="instruction-description" id="instructionDesc">Relaxe e concentre-se na sua respiração</span>
+                </div>
+
+                <!-- Controles -->
+                <div class="breathing-controls">
+                    <button class="btn btn-primary start-btn" id="startBtn" aria-label="Iniciar">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="reset-btn" id="resetBtn" style="display: none;">
+                        <i class="fas fa-redo"></i>
+                        Recomeçar
+                    </button>
+                </div>
+            </section>
+
+            <!-- Informações da Técnica -->
+            <section class="technique-info">
+                <h3 class="technique-title">
+                    <i class="fas fa-info-circle"></i>
+                    Técnica 4-7-8
+                </h3>
+                <div class="technique-steps">
+                    <div class="technique-step">
+                        <span class="step-number inhale">1</span>
+                        <div class="step-content">
+                            <span class="step-label">Inspire</span>
+                            <span class="step-duration">4 segundos</span>
+                        </div>
+                    </div>
+                    <div class="technique-step">
+                        <span class="step-number hold">2</span>
+                        <div class="step-content">
+                            <span class="step-label">Segure</span>
+                            <span class="step-duration">7 segundos</span>
+                        </div>
+                    </div>
+                    <div class="technique-step">
+                        <span class="step-number exhale">3</span>
+                        <div class="step-content">
+                            <span class="step-label">Expire</span>
+                            <span class="step-duration">8 segundos</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Estatísticas -->
+            <section class="breathing-stats">
+                <div class="stats-header">
+                    <span class="stats-title">Suas Sessões</span>
+                    <button class="stats-reset" id="statsReset">Limpar</button>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <span class="stat-item-value" id="todaySessions">0</span>
+                        <span class="stat-item-label">Hoje</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-item-value" id="totalSessions">0</span>
+                        <span class="stat-item-label">Total</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-item-value" id="totalMinutes">0</span>
+                        <span class="stat-item-label">Minutos</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Toggle de Som -->
+            <section class="sound-toggle">
+                <div class="sound-toggle-label">
+                    <i class="fas fa-volume-up"></i>
+                    Sons relaxantes
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="soundToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </section>
+
+            <!-- Benefícios -->
+            <section class="benefits-section">
+                <h3 class="benefits-title">Benefícios da Respiração Consciente</h3>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <span class="benefit-icon">😌</span>
+                        <span class="benefit-text">Reduz ansiedade</span>
+                    </div>
+                    <div class="benefit-card">
+                        <span class="benefit-icon">😴</span>
+                        <span class="benefit-text">Melhora o sono</span>
+                    </div>
+                    <div class="benefit-card">
+                        <span class="benefit-icon">🧘</span>
+                        <span class="benefit-text">Aumenta foco</span>
+                    </div>
+                    <div class="benefit-card">
+                        <span class="benefit-icon">💪</span>
+                        <span class="benefit-text">Reduz estresse</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Navbar Inferior -->
+    <nav class="navbar" aria-label="Navegação principal">
+        <div class="navbar-content">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="humor.html" class="nav-item">
+                <i class="fas fa-smile"></i>
+                <span>Humor</span>
+            </a>
+            <a href="diario.html" class="nav-item">
+                <i class="fas fa-book"></i>
+                <span>Diário</span>
+            </a>
+            <a href="historico.html" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Histórico</span>
+            </a>
+            <a href="respirar.html" class="nav-item active" aria-current="page">
+                <i class="fas fa-wind"></i>
+                <span>Respirar</span>
+            </a>
+            <a href="config.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Config</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/respirar.js"></script>
+</body>
+</html>

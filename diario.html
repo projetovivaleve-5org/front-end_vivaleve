@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Pluma - Seu diário emocional. Escreva seus pensamentos e reflexões.">
+    <meta name="theme-color" content="#73f59f">
+    
+    <title>Pluma - Diário Emocional</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/diario.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-feather-alt"></i>
+                Pluma
+            </a>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <!-- Lista de Entradas -->
+        <div id="diaryList">
+            <!-- Header do Diário -->
+            <div class="diary-header">
+                <h2>Meu Diário</h2>
+                <button class="btn btn-primary new-entry-btn" id="newEntryBtn">
+                    <i class="fas fa-plus"></i>
+                    Nova Entrada
+                </button>
+            </div>
+
+            <!-- Filtros -->
+            <div class="diary-filters">
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar nas entradas...">
+                </div>
+                <button class="filter-btn" id="filterBtn" aria-label="Filtrar">
+                    <i class="fas fa-filter"></i>
+                </button>
+            </div>
+
+            <!-- Entradas do Diário -->
+            <div class="diary-entries" id="diaryEntries">
+                <!-- Entradas serão inseridas via JavaScript -->
+            </div>
+
+            <!-- Estado Vazio -->
+            <div class="diary-empty" id="diaryEmpty" style="display: none;">
+                <i class="fas fa-book-open"></i>
+                <h3>Seu diário está vazio</h3>
+                <p>Comece a escrever seus pensamentos e sentimentos</p>
+                <button class="btn btn-primary" id="emptyNewEntryBtn">
+                    <i class="fas fa-pen"></i>
+                    Criar primeira entrada
+                </button>
+            </div>
+        </div>
+
+        <!-- Visualização de Entrada -->
+        <div class="entry-view" id="entryView">
+            <div class="entry-view-header">
+                <button class="back-btn" id="backBtn">
+                    <i class="fas fa-arrow-left"></i>
+                    Voltar
+                </button>
+                <div class="entry-actions">
+                    <button class="entry-action" id="editEntryBtn">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="entry-action delete" id="deleteEntryBtn">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="entry-view-content" id="entryViewContent">
+                <!-- Conteúdo será inserido via JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Nova/Editar Entrada -->
+    <div class="modal-overlay" id="entryModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Nova Entrada</h3>
+                <button class="modal-close" id="closeModal" aria-label="Fechar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="entryForm">
+                    <!-- Seletor de Emoção -->
+                    <div class="emotion-selector">
+                        <span class="emotion-selector-label">Como você está se sentindo?</span>
+                        <div class="emotion-options" id="emotionOptions">
+                            <div class="emotion-option" data-emotion="otimo" title="Ótimo">😄</div>
+                            <div class="emotion-option" data-emotion="bem" title="Bem">🙂</div>
+                            <div class="emotion-option" data-emotion="mais-ou-menos" title="Mais ou menos">😐</div>
+                            <div class="emotion-option" data-emotion="mal" title="Mal">😔</div>
+                            <div class="emotion-option" data-emotion="depressivo" title="Depressivo">😢</div>
+                            <div class="emotion-option" data-emotion="ansioso" title="Ansioso">😰</div>
+                        </div>
+                    </div>
+
+                    <!-- Título -->
+                    <div class="form-group">
+                        <label class="form-label" for="entryTitle">Título</label>
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            id="entryTitle" 
+                            placeholder="Dê um título para esta entrada..."
+                            maxlength="100"
+                            required
+                        >
+                    </div>
+
+                    <!-- Texto -->
+                    <div class="form-group">
+                        <label class="form-label" for="entryText">O que está na sua mente?</label>
+                        <textarea 
+                            class="form-textarea" 
+                            id="entryText" 
+                            placeholder="Escreva livremente seus pensamentos, sentimentos, reflexões..."
+                            rows="6"
+                            required
+                        ></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelEntry">Cancelar</button>
+                <button class="btn btn-primary" id="saveEntry">
+                    <i class="fas fa-save"></i>
+                    Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar Inferior -->
+    <nav class="navbar" aria-label="Navegação principal">
+        <div class="navbar-content">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="humor.html" class="nav-item">
+                <i class="fas fa-smile"></i>
+                <span>Humor</span>
+            </a>
+            <a href="diario.html" class="nav-item active" aria-current="page">
+                <i class="fas fa-book"></i>
+                <span>Diário</span>
+            </a>
+            <a href="historico.html" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Histórico</span>
+            </a>
+            <a href="respirar.html" class="nav-item">
+                <i class="fas fa-wind"></i>
+                <span>Respirar</span>
+            </a>
+            <a href="config.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Config</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/diario.js"></script>
+</body>
+</html>

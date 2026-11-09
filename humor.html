@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Pluma - Registre seu humor diário e acompanhe sua evolução emocional.">
+    <meta name="theme-color" content="#73f59f">
+    
+    <title>Pluma - Registrar Humor</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/humor.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-feather-alt"></i>
+                Pluma
+            </a>
+            <span class="current-date" id="currentDate">
+                <i class="fas fa-calendar-alt"></i>
+                <span></span>
+            </span>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container humor-container">
+        <!-- Pergunta Principal -->
+        <section class="humor-question fade-in">
+            <h2>Como você está se sentindo?</h2>
+            <p>Escolha a emoção que melhor representa seu dia</p>
+        </section>
+
+        <!-- Grid de Emoções -->
+        <section class="emotions-grid slide-up" id="emotionsGrid">
+            <div class="emotion-card" data-emotion="otimo" tabindex="0" role="button" aria-pressed="false">
+                <span class="emotion-icon">😄</span>
+                <span class="emotion-label">Ótimo</span>
+            </div>
+            <div class="emotion-card" data-emotion="bem" tabindex="0" role="button" aria-pressed="false">
+                <span class="emotion-icon">🙂</span>
+                <span class="emotion-label">Bem</span>
+            </div>
+            <div class="emotion-card" data-emotion="mais-ou-menos" tabindex="0" role="button" aria-pressed="false">
+                <span class="emotion-icon">😐</span>
+                <span class="emotion-label">Mais ou menos</span>
+            </div>
+            <div class="emotion-card" data-emotion="mal" tabindex="0" role="button" aria-pressed="false">
+                <span class="emotion-icon">😔</span>
+                <span class="emotion-label">Mal</span>
+            </div>
+            <div class="emotion-card" data-emotion="depressivo" tabindex="0" role="button" aria-pressed="false">
+                <span class="emotion-icon">😢</span>
+                <span class="emotion-label">Depressivo</span>
+            </div>
+            <div class="emotion-card" data-emotion="ansioso" tabindex="0" role="button" aria-pressed="false">
+                <span class="emotion-icon">😰</span>
+                <span class="emotion-label">Ansioso</span>
+            </div>
+        </section>
+
+        <!-- Seção de Nota -->
+        <section class="note-section card">
+            <label class="form-label">
+                <i class="fas fa-pen"></i>
+                Quer adicionar uma nota? (opcional)
+            </label>
+            <textarea 
+                class="form-textarea note-textarea" 
+                id="moodNote" 
+                placeholder="Escreva como você está se sentindo, o que aconteceu hoje..."
+                maxlength="500"
+            ></textarea>
+            <small style="color: var(--cinza-medio); font-size: 0.8rem;">
+                <span id="noteCharCount">0</span>/500 caracteres
+            </small>
+        </section>
+
+        <!-- Seção de Upload -->
+        <section class="upload-section card">
+            <label class="form-label">
+                <i class="fas fa-image"></i>
+                Adicionar uma imagem (opcional)
+            </label>
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p class="upload-text">Clique ou arraste uma imagem</p>
+                <p class="upload-hint">PNG, JPG até 5MB</p>
+                <input type="file" id="imageUpload" accept="image/*" hidden>
+            </div>
+            <div class="upload-preview" id="uploadPreview">
+                <img id="previewImage" src="" alt="Preview da imagem">
+                <button class="remove-image" id="removeImage" aria-label="Remover imagem">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Seção de Atividades -->
+        <section class="activities-section card">
+            <label class="form-label">
+                <i class="fas fa-list-check"></i>
+                O que você fez hoje?
+            </label>
+            <div class="activities-grid" id="activitiesGrid">
+                <div class="activity-tag" data-activity="trabalho">
+                    <i class="fas fa-briefcase"></i>
+                    Trabalho
+                </div>
+                <div class="activity-tag" data-activity="exercicio">
+                    <i class="fas fa-running"></i>
+                    Exercício
+                </div>
+                <div class="activity-tag" data-activity="familia">
+                    <i class="fas fa-home"></i>
+                    Família
+                </div>
+                <div class="activity-tag" data-activity="amigos">
+                    <i class="fas fa-users"></i>
+                    Amigos
+                </div>
+                <div class="activity-tag" data-activity="hobby">
+                    <i class="fas fa-palette"></i>
+                    Hobby
+                </div>
+                <div class="activity-tag" data-activity="descanso">
+                    <i class="fas fa-couch"></i>
+                    Descanso
+                </div>
+                <div class="activity-tag" data-activity="estudo">
+                    <i class="fas fa-book"></i>
+                    Estudo
+                </div>
+                <div class="activity-tag" data-activity="meditacao">
+                    <i class="fas fa-spa"></i>
+                    Meditação
+                </div>
+            </div>
+        </section>
+
+        <!-- Botão Salvar -->
+        <section class="save-section">
+            <button class="btn btn-primary btn-block save-btn" id="saveBtn" disabled>
+                <i class="fas fa-save"></i>
+                Salvar Registro
+            </button>
+        </section>
+
+        <!-- Confirmação de Salvamento -->
+        <div class="save-confirmation" id="saveConfirmation">
+            <i class="fas fa-check-circle"></i>
+            <h3>Registro Salvo!</h3>
+            <p>Continue cuidando de você 💚</p>
+            <a href="historico.html" class="btn btn-outline mt-md">Ver Histórico</a>
+        </div>
+
+        <!-- Histórico Rápido -->
+        <section class="quick-history" id="quickHistory">
+            <h3 class="quick-history-title">
+                <i class="fas fa-history"></i>
+                Últimos registros
+            </h3>
+            <div class="quick-history-items" id="quickHistoryItems">
+                <!-- Itens serão inseridos via JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Navbar Inferior -->
+    <nav class="navbar" aria-label="Navegação principal">
+        <div class="navbar-content">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </a>
+            <a href="humor.html" class="nav-item active" aria-current="page">
+                <i class="fas fa-smile"></i>
+                <span>Humor</span>
+            </a>
+            <a href="diario.html" class="nav-item">
+                <i class="fas fa-book"></i>
+                <span>Diário</span>
+            </a>
+            <a href="historico.html" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Histórico</span>
+            </a>
+            <a href="respirar.html" class="nav-item">
+                <i class="fas fa-wind"></i>
+                <span>Respirar</span>
+            </a>
+            <a href="config.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Config</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/humor.js"></script>
+</body>
+</html>
