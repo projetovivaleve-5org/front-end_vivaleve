@@ -111,7 +111,7 @@ class ChatManager {
     pedirLogin() {
         if (this.mensagensEl.querySelector('.chat-login-aviso')) return;
 
-        this.renderMensagem('bot', 'Para conversar comigo, entre com seu email e senha. Assim suas conversas ficam guardadas só para você.');
+        this.renderMensagem('bot', 'Para conversar comigo, entre na sua conta (email e senha ou Google). Assim suas conversas ficam guardadas só para você.');
 
         const ultima = this.typingEl.previousElementSibling;
         const corpo = ultima && ultima.querySelector('.message-content');

@@ -71,14 +71,13 @@
 
         <!-- Login Social -->
         <div class="social-login" style="flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+            <!-- Botão oficial do Google (Google Identity Services). Aparece no lugar do botão abaixo quando o Client ID está configurado em js/api.js -->
+            <div id="googleButton" style="display: none; justify-content: center;"></div>
             <button class="social-btn google" id="googleLogin" style="padding: 1rem; font-size: 1rem;">
                 <i class="fab fa-google"></i>
                 Continuar com o Google
             </button>
-            <button class="social-btn apple" id="appleLogin" style="padding: 1rem; font-size: 1rem;">
-                <i class="fab fa-apple"></i>
-                Continuar com a Apple
-            </button>
+            <p class="form-error" id="socialError" role="alert" style="text-align: center;"></p>
         </div>
 
         <!-- Aviso -->
@@ -90,7 +89,8 @@
     </div>
 
     <!-- Scripts -->
-    <script src="js/api.js?v=3"></script>
-    <script src="js/login.js?v=3"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="js/api.js?v=4"></script>
+    <script src="js/login.js?v=4"></script>
 </body>
 </html>

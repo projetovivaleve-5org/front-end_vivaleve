@@ -1,7 +1,8 @@
 /**
  * PLUMA - Login
- * - Email e senha: login/cadastro de verdade no back-end (recebe o token usado pelo chat com IA).
- * - Google e Apple: ainda simulados via localStorage (sem token: o chat pede para entrar com email).
+ * - Email e senha: /v1/auth/login e /v1/auth/register no back-end.
+ * - Google: botão oficial do Google (Google Identity Services) -> ID Token -> /v1/auth/google.
+ * Os dois devolvem o token usado pelo chat com IA.
  * Depende de js/api.js (window.VivaLeveAPI).
  */
 
@@ -17,13 +18,12 @@ function initLogin() {
     }
 
     // Os botões "Sair" só apagam pluma_logged_in/pluma_user: aqui apagamos também o token
-    // antigo, para o próximo login (inclusive o simulado) não usar a conta de outra pessoa.
+    // antigo, para o próximo login não usar a conta de outra pessoa.
     VivaLeveAPI.auth.sair();
 
     setupEmailLogin();
 
-    // Configura os botões de login social
-    setupSocialLogin();
+    setupGoogleLogin();
 }
 
 // ============================================
@@ -116,50 +116,72 @@ function mensagemDeErro(err, modoCadastro) {
 }
 
 // ============================================
-// LOGIN SOCIAL (GOOGLE E APPLE) - SIMULADO
+// LOGIN COM GOOGLE (back-end: /v1/auth/google)
 // ============================================
 
-function setupSocialLogin() {
-    const googleBtn = document.getElementById('googleLogin');
-    const appleBtn = document.getElementById('appleLogin');
+function mostrarErroSocial(msg) {
+    const el = document.getElementById('socialError');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.toggle('visible', Boolean(msg));
+}
 
-    if (googleBtn) {
-        googleBtn.addEventListener('click', function(e) {
-            simulateSocialLogin('Google', e.currentTarget);
+function setupGoogleLogin() {
+    const googleBtn = document.getElementById('googleLogin');
+    const clientId = VivaLeveAPI.googleClientId;
+
+    if (!clientId) {
+        // Sem Client ID: o botão fica, mas avisa em vez de fingir um login.
+        googleBtn.addEventListener('click', function() {
+            mostrarErroSocial('Login com Google ainda não configurado (GOOGLE_CLIENT_ID em js/api.js).');
         });
+        return;
     }
 
-    if (appleBtn) {
-        appleBtn.addEventListener('click', function(e) {
-            simulateSocialLogin('Apple', e.currentTarget);
+    // Se a biblioteca do Google não carregar (bloqueador, sem internet), o botão avisa.
+    googleBtn.addEventListener('click', function() {
+        mostrarErroSocial('Não foi possível carregar o login do Google. Verifique sua conexão e recarregue a página.');
+    });
+
+    function iniciar() {
+        google.accounts.id.initialize({
+            client_id: clientId,
+            callback: onGoogleCredential,
+            ux_mode: 'popup'
         });
+        const container = document.getElementById('googleButton');
+        google.accounts.id.renderButton(container, {
+            theme: 'outline',
+            size: 'large',
+            shape: 'pill',
+            text: 'continue_with',
+            locale: 'pt-BR',
+            width: Math.min(container.parentElement.clientWidth || 320, 400)
+        });
+        container.style.display = 'flex';
+        googleBtn.style.display = 'none';
+    }
+
+    if (window.google && google.accounts && google.accounts.id) {
+        iniciar();
+    } else {
+        // Chamado pela própria biblioteca (gsi/client) quando termina de carregar.
+        window.onGoogleLibraryLoad = iniciar;
     }
 }
 
-function simulateSocialLogin(provider, button) {
-    if (button) {
-        button.disabled = true;
-        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Conectando...';
-    }
-
-    setTimeout(() => {
-        // Cria os dados simulados do usuário logado
-        const fakeEmail = `usuario_${provider.toLowerCase()}@exemplo.com`;
-
-        const user = {
-            id: Date.now(),
-            email: fakeEmail,
-            name: `Usuário ${provider}`,
-            provider: provider,
-            createdAt: new Date().toISOString()
-        };
-
-        // Salva os dados e marca como logado no localStorage
-        localStorage.setItem('pluma_user', JSON.stringify(user));
-        localStorage.setItem('pluma_user_name', user.name);
-        localStorage.setItem('pluma_logged_in', 'true');
-
-        // Redireciona para a página principal
+/** Recebe o ID Token do Google e troca pelo token da API. */
+async function onGoogleCredential(response) {
+    mostrarErroSocial('');
+    try {
+        await VivaLeveAPI.auth.google(response.credential);
         window.location.href = 'index.html';
-    }, 1200);
+    } catch (err) {
+        let msg = 'Não foi possível entrar com o Google agora.';
+        if (err.offline) msg = 'Não foi possível conectar ao servidor. Tente de novo em instantes.';
+        else if (err.status === 401) msg = 'Não conseguimos confirmar sua conta Google. Tente de novo.';
+        else if (err.status === 409) msg = 'Este email já está ligado a outra conta Google.';
+        else if (err.status === 503) msg = 'O Google não respondeu. Tente de novo em instantes.';
+        mostrarErroSocial(msg);
+    }
 }
