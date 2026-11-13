@@ -230,13 +230,6 @@
     color: var(--verde-escuro);
 }
 
-/* o ícone do olho não segue a regra ".input-icon-wrapper i" (ícone à esquerda) */
-.input-icon-wrapper .password-toggle i {
-    position: static;
-    transform: none;
-    color: inherit;
-}
-
 /* Erro de Validação */
 .form-error {
     display: none;
