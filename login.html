@@ -32,6 +32,43 @@
             <p class="login-subtitle">Sua jornada de bem-estar emocional começa aqui. Escolha uma opção para continuar:</p>
         </div>
 
+        <!-- Login com email e senha (back-end: /v1/auth/login e /v1/auth/register) -->
+        <form class="login-form" id="loginForm" novalidate>
+            <div class="form-group" id="nameGroup" hidden>
+                <div class="input-icon-wrapper">
+                    <i class="fas fa-user"></i>
+                    <input type="text" class="form-input" id="loginName" placeholder="Seu nome (opcional)" maxlength="100" autocomplete="name">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-icon-wrapper">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-input" id="loginEmail" placeholder="Email" maxlength="100" autocomplete="email" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-icon-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-input" id="loginPassword" placeholder="Senha" maxlength="64" autocomplete="current-password" required>
+                    <button type="button" class="password-toggle" id="passwordToggle" aria-label="Mostrar senha">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <p class="form-error" id="loginError" role="alert"></p>
+            </div>
+            <button type="submit" class="btn btn-primary login-btn" id="loginSubmit">Entrar</button>
+            <p class="register-link">
+                <span id="toggleText">Ainda não tem conta?</span>
+                <a href="#" id="toggleMode">Criar conta</a>
+            </p>
+        </form>
+
+        <div class="login-divider">
+            <span></span>
+            <p>ou</p>
+            <span></span>
+        </div>
+
         <!-- Login Social -->
         <div class="social-login" style="flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
             <button class="social-btn google" id="googleLogin" style="padding: 1rem; font-size: 1rem;">
@@ -53,6 +90,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="js/login.js"></script>
+    <script src="js/api.js?v=3"></script>
+    <script src="js/login.js?v=3"></script>
 </body>
 </html>

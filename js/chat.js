@@ -1,334 +1,204 @@
 /**
  * Pluma - Chat com IA
- * Assistente de saúde mental com respostas empáticas
+ * Conversa com o back-end (POST /v1/ai/chat), que responde com a IA (Groq).
+ * Depende de js/api.js (window.VivaLeveAPI) e precisa do login com token.
+ *
+ * O back devolve status:
+ *  - SUCCESS: resposta da IA
+ *  - FALLBACK: IA fora do ar; o texto já é uma mensagem padrão gentil
+ *  - CRISIS: frase de risco detectada; mostra a resposta + links do CVV/SAMU
  */
 
 class ChatManager {
     constructor() {
-        this.mensagens = [];
-        this.isTyping = false;
-        this.nomeUsuario = localStorage.getItem('pluma_user_name') || 'Amigo';
-        
-        // Respostas pré-definidas (simulando IA)
-        this.respostas = {
-            saudacao: [
-                `Olá, ${this.nomeUsuario}! Como você está se sentindo hoje? Estou aqui para ouvir.`,
-                `Oi! Que bom te ver por aqui. Como posso te ajudar hoje?`,
-                `Olá! Espero que esteja tendo um bom dia. Do que gostaria de conversar?`
-            ],
-            tristeza: [
-                `Sinto muito que você esteja passando por isso. Lembre-se que é normal sentir tristeza às vezes. Quer me contar mais sobre o que está acontecendo?`,
-                `Obrigado por compartilhar isso comigo. A tristeza faz parte da vida, mas não precisa enfrentá-la sozinho. O que está pesando no seu coração?`,
-                `Entendo como você se sente. Momentos difíceis passam, mesmo que não pareça agora. Estou aqui para te ouvir.`
-            ],
-            ansiedade: [
-                `A ansiedade pode ser muito desconfortável. Vamos tentar um exercício de respiração juntos? Inspire por 4 segundos, segure por 4 e expire por 4.`,
-                `Percebo que está ansioso. Lembre-se: você já superou momentos difíceis antes e vai superar esse também. Que tal focar no momento presente?`,
-                `A ansiedade é como uma onda - ela vem, mas também vai embora. Vamos encontrar formas de surfar essa onda juntos?`
-            ],
-            estresse: [
-                `O estresse pode ser muito cansativo. Você tem conseguido descansar? Às vezes uma pausa pequena já faz diferença.`,
-                `Entendo que está sob pressão. Vamos identificar uma pequena coisa que você pode fazer agora para se sentir um pouco melhor?`,
-                `Quando tudo parece demais, é importante lembrar: você não precisa resolver tudo de uma vez. Um passo de cada vez.`
-            ],
-            positivo: [
-                `Que maravilha saber que você está bem! O que está contribuindo para esse bom momento?`,
-                `Fico muito feliz em ouvir isso! Aproveite esse momento e guarde essa energia positiva.`,
-                `Excelente! Momentos assim são preciosos. O que você fez para chegar até aqui?`
-            ],
-            ajuda: [
-                `Estou aqui para conversar e te apoiar. Você pode me contar como está se sentindo, fazer exercícios de respiração, ou simplesmente desabafar.`,
-                `Posso te ajudar de várias formas: conversando, sugerindo técnicas de relaxamento, ou apenas sendo uma companhia. O que você prefere?`,
-                `Você pode compartilhar qualquer coisa comigo. Não estou aqui para julgar, apenas para ouvir e apoiar.`
-            ],
-            padrao: [
-                `Obrigado por compartilhar. Quer me contar mais sobre isso?`,
-                `Entendo. Como isso te faz sentir?`,
-                `Interessante. O que mais você gostaria de falar sobre isso?`,
-                `Estou ouvindo. Continue, por favor.`,
-                `Agradeço por confiar em mim. Como posso te ajudar com isso?`
-            ]
-        };
+        this.api = window.VivaLeveAPI;
+        this.mensagensEl = document.getElementById('chatMessages');
+        this.inputEl = document.getElementById('chatInput');
+        this.enviarBtn = document.getElementById('sendBtn');
+        this.typingEl = document.getElementById('typingIndicator');
+        this.boasVindasEl = this.mensagensEl.querySelector('.welcome-message');
+        this.enviando = false;
 
-        this.init();
+        this.registrarEventos();
+
+        if (this.api.auth.logado()) {
+            this.carregarHistorico();
+        } else {
+            this.pedirLogin();
+        }
     }
 
-    init() {
-        this.setupEventListeners();
-        this.carregarHistorico();
-        this.enviarMensagemBot(this.getRandomResponse('saudacao'));
-    }
+    registrarEventos() {
+        this.inputEl.addEventListener('input', () => {
+            this.ajustarAltura();
+            this.atualizarBotao();
+        });
 
-    setupEventListeners() {
-        const form = document.getElementById('chat-form');
-        const input = document.getElementById('chat-input');
-        const btnEnviar = document.getElementById('btn-enviar');
-
-        if (form) {
-            form.addEventListener('submit', (e) => {
+        this.inputEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                this.enviarMensagem();
-            });
-        }
-
-        if (input) {
-            input.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    this.enviarMensagem();
-                }
-            });
-
-            input.addEventListener('input', () => {
-                this.ajustarAlturaInput();
-            });
-        }
-
-        // Sugestões rápidas
-        document.querySelectorAll('.sugestao-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const texto = btn.dataset.texto;
-                if (input) {
-                    input.value = texto;
-                    this.enviarMensagem();
-                }
-            });
+                this.enviar();
+            }
         });
 
-        // Limpar histórico
-        const btnLimpar = document.getElementById('btn-limpar-chat');
-        if (btnLimpar) {
-            btnLimpar.addEventListener('click', () => this.limparHistorico());
-        }
-    }
+        this.enviarBtn.addEventListener('click', () => this.enviar());
 
-    ajustarAlturaInput() {
-        const input = document.getElementById('chat-input');
-        if (input) {
-            input.style.height = 'auto';
-            input.style.height = Math.min(input.scrollHeight, 120) + 'px';
-        }
-    }
-
-    enviarMensagem() {
-        const input = document.getElementById('chat-input');
-        if (!input) return;
-
-        const texto = input.value.trim();
-        if (!texto || this.isTyping) return;
-
-        // Adicionar mensagem do usuário
-        this.adicionarMensagem('usuario', texto);
-        input.value = '';
-        this.ajustarAlturaInput();
-
-        // Simular resposta da IA
-        this.simularResposta(texto);
-    }
-
-    adicionarMensagem(tipo, texto) {
-        const mensagem = {
-            id: Date.now().toString(),
-            tipo: tipo,
-            texto: texto,
-            timestamp: new Date().toISOString()
-        };
-
-        this.mensagens.push(mensagem);
-        this.renderMensagem(mensagem);
-        this.salvarHistorico();
-        this.scrollToBottom();
-    }
-
-    renderMensagem(mensagem) {
-        const container = document.getElementById('chat-mensagens');
-        if (!container) return;
-
-        const hora = new Date(mensagem.timestamp).toLocaleTimeString('pt-BR', {
-            hour: '2-digit',
-            minute: '2-digit'
+        // Ações rápidas e sugestões usam data-message
+        document.querySelectorAll('.quick-action-btn, .suggestion-chip').forEach(btn => {
+            btn.addEventListener('click', () => this.enviar(btn.dataset.message));
         });
-
-        const div = document.createElement('div');
-        div.className = `mensagem mensagem-${mensagem.tipo}`;
-        div.innerHTML = `
-            <div class="mensagem-conteudo">
-                ${mensagem.tipo === 'bot' ? '<div class="bot-avatar">🪶</div>' : ''}
-                <div class="mensagem-texto">${this.formatarTexto(mensagem.texto)}</div>
-            </div>
-            <span class="mensagem-hora">${hora}</span>
-        `;
-
-        container.appendChild(div);
     }
 
-    formatarTexto(texto) {
-        // Converter quebras de linha
-        return texto.replace(/\n/g, '<br>');
-    }
-
-    simularResposta(textoUsuario) {
-        this.isTyping = true;
-        this.mostrarTyping();
-
-        // Analisar sentimento/intenção
-        const categoria = this.analisarTexto(textoUsuario);
-        const resposta = this.getRandomResponse(categoria);
-
-        // Simular delay de digitação
-        const delay = Math.min(1000 + resposta.length * 20, 3000);
-
-        setTimeout(() => {
-            this.esconderTyping();
-            this.isTyping = false;
-            this.enviarMensagemBot(resposta);
-        }, delay);
-    }
-
-    analisarTexto(texto) {
-        const textoLower = texto.toLowerCase();
-
-        // Palavras-chave para cada categoria
-        const categorias = {
-            saudacao: ['oi', 'olá', 'ola', 'hey', 'bom dia', 'boa tarde', 'boa noite', 'e aí', 'eai'],
-            tristeza: ['triste', 'tristeza', 'chorar', 'chorando', 'deprimido', 'depressão', 'mal', 'péssimo', 'horrível', 'sozinho', 'vazio'],
-            ansiedade: ['ansioso', 'ansiosa', 'ansiedade', 'nervoso', 'nervosa', 'preocupado', 'preocupada', 'medo', 'pânico', 'angústia'],
-            estresse: ['estresse', 'estressado', 'estressada', 'cansado', 'cansada', 'exausto', 'exausta', 'pressão', 'sobrecarregado'],
-            positivo: ['bem', 'ótimo', 'ótima', 'feliz', 'alegre', 'contente', 'maravilhoso', 'incrível', 'animado', 'animada'],
-            ajuda: ['ajuda', 'ajudar', 'como funciona', 'o que você faz', 'pode me ajudar', 'preciso de ajuda']
-        };
-
-        for (const [categoria, palavras] of Object.entries(categorias)) {
-            for (const palavra of palavras) {
-                if (textoLower.includes(palavra)) {
-                    return categoria;
-                }
+    async carregarHistorico() {
+        try {
+            const mensagens = await this.api.ia.historico();
+            mensagens
+                .filter(m => m.role === 'USER' || m.role === 'ASSISTANT')
+                .forEach(m => this.renderMensagem(
+                    m.role === 'USER' ? 'user' : 'bot',
+                    m.content,
+                    m.createdAt,
+                    m.status === 'CRISIS'
+                ));
+        } catch (e) {
+            if (e.semLogin) {
+                this.pedirLogin();
+                return;
             }
-        }
-
-        return 'padrao';
-    }
-
-    getRandomResponse(categoria) {
-        const respostas = this.respostas[categoria] || this.respostas.padrao;
-        return respostas[Math.floor(Math.random() * respostas.length)];
-    }
-
-    enviarMensagemBot(texto) {
-        this.adicionarMensagem('bot', texto);
-    }
-
-    mostrarTyping() {
-        const container = document.getElementById('chat-mensagens');
-        if (!container) return;
-
-        const typing = document.createElement('div');
-        typing.id = 'typing-indicator';
-        typing.className = 'mensagem mensagem-bot typing';
-        typing.innerHTML = `
-            <div class="mensagem-conteudo">
-                <div class="bot-avatar">🪶</div>
-                <div class="typing-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-        `;
-
-        container.appendChild(typing);
-        this.scrollToBottom();
-    }
-
-    esconderTyping() {
-        const typing = document.getElementById('typing-indicator');
-        if (typing) {
-            typing.remove();
+            // API fora do ar: o chat abre vazio e o erro aparece ao enviar a primeira mensagem.
+            console.warn('[Pluma] Histórico indisponível:', e.message);
         }
     }
 
-    scrollToBottom() {
-        const container = document.getElementById('chat-mensagens');
-        if (container) {
-            container.scrollTop = container.scrollHeight;
+    async enviar(textoFixo) {
+        const texto = (textoFixo ?? this.inputEl.value).trim();
+        if (!texto || this.enviando) return;
+
+        if (!this.api.auth.logado()) {
+            this.pedirLogin();
+            return;
         }
-    }
 
-    salvarHistorico() {
-        localStorage.setItem('pluma_chat_historico', JSON.stringify(this.mensagens));
-    }
-
-    carregarHistorico() {
-        const historico = localStorage.getItem('pluma_chat_historico');
-        if (historico) {
-            this.mensagens = JSON.parse(historico);
-            this.mensagens.forEach(msg => this.renderMensagem(msg));
+        this.renderMensagem('user', texto);
+        if (textoFixo === undefined) {
+            this.inputEl.value = '';
+            this.ajustarAltura();
         }
-    }
 
-    limparHistorico() {
-        if (confirm('Tem certeza que deseja limpar o histórico do chat?')) {
-            this.mensagens = [];
-            localStorage.removeItem('pluma_chat_historico');
-            
-            const container = document.getElementById('chat-mensagens');
-            if (container) {
-                container.innerHTML = '';
+        this.setEnviando(true);
+        try {
+            const resp = await this.api.ia.conversar(texto);
+            this.renderMensagem('bot', resp.reply, resp.createdAt, resp.status === 'CRISIS');
+            if (resp.status === 'FALLBACK') {
+                console.warn('[Pluma] Resposta padrão (FALLBACK): a IA falhou no back-end. Veja o log "Falha ao chamar Groq".');
             }
-
-            this.enviarMensagemBot(this.getRandomResponse('saudacao'));
+        } catch (e) {
+            console.error('[Pluma] Erro no chat:', e);
+            if (e.semLogin) {
+                this.pedirLogin();
+                return;
+            }
+            const msg = e.offline
+                ? 'Não consegui me conectar agora. Verifique sua internet e tente de novo.'
+                : 'Tive um problema para responder. Tente de novo em instantes.';
+            this.renderMensagem('bot', msg + '\n\nSe precisar conversar com alguém agora, o CVV atende 24h pelo 188.');
+        } finally {
+            this.setEnviando(false);
         }
+    }
+
+    /** Sem token (login simulado, token vencido ou "Sair"): explica e leva para o login. */
+    pedirLogin() {
+        if (this.mensagensEl.querySelector('.chat-login-aviso')) return;
+
+        this.renderMensagem('bot', 'Para conversar comigo, entre com seu email e senha. Assim suas conversas ficam guardadas só para você.');
+
+        const ultima = this.typingEl.previousElementSibling;
+        const corpo = ultima && ultima.querySelector('.message-content');
+        if (!corpo) return;
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn btn-primary chat-login-aviso';
+        btn.style.marginTop = '0.75rem';
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar';
+        btn.addEventListener('click', () => {
+            this.api.auth.sair();
+            window.location.href = 'login.html';
+        });
+        corpo.appendChild(btn);
+    }
+
+    /** tipo: 'user' | 'bot'. Usa textContent para nunca interpretar HTML vindo da IA. */
+    renderMensagem(tipo, texto, dataIso, crise = false) {
+        if (this.boasVindasEl) {
+            this.boasVindasEl.remove();
+            this.boasVindasEl = null;
+        }
+
+        const msg = document.createElement('div');
+        msg.className = `message ${tipo}`;
+
+        const avatar = document.createElement('div');
+        avatar.className = 'message-avatar';
+        avatar.innerHTML = tipo === 'bot' ? '<i class="fas fa-heart"></i>' : '<i class="fas fa-user"></i>';
+
+        const corpo = document.createElement('div');
+        const conteudo = document.createElement('div');
+        conteudo.className = 'message-content';
+        conteudo.style.whiteSpace = 'pre-line';
+        conteudo.textContent = texto;
+        corpo.appendChild(conteudo);
+
+        if (crise) {
+            corpo.appendChild(this.criarLinksDeAjuda());
+        }
+
+        const hora = document.createElement('div');
+        hora.className = 'message-time';
+        hora.textContent = new Date(dataIso || Date.now())
+            .toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        corpo.appendChild(hora);
+
+        msg.append(avatar, corpo);
+        // mantém o "digitando..." sempre por último
+        this.mensagensEl.insertBefore(msg, this.typingEl);
+        this.rolarParaBaixo();
+    }
+
+    criarLinksDeAjuda() {
+        const box = document.createElement('div');
+        box.className = 'chat-helpful-links';
+        box.innerHTML = `
+            <div class="helpful-links-title"><i class="fas fa-hands-helping"></i> Ajuda agora</div>
+            <a class="helpful-link" href="tel:188"><i class="fas fa-phone"></i> CVV - ligar 188 (24h, gratuito)</a>
+            <a class="helpful-link" href="https://cvv.org.br" target="_blank" rel="noopener"><i class="fas fa-comments"></i> Chat do CVV (cvv.org.br)</a>
+            <a class="helpful-link" href="tel:192"><i class="fas fa-ambulance"></i> SAMU - ligar 192</a>
+        `;
+        return box;
+    }
+
+    setEnviando(ativo) {
+        this.enviando = ativo;
+        this.typingEl.classList.toggle('visible', ativo);
+        this.atualizarBotao();
+        if (ativo) this.rolarParaBaixo();
+    }
+
+    atualizarBotao() {
+        this.enviarBtn.disabled = this.enviando || !this.inputEl.value.trim();
+    }
+
+    ajustarAltura() {
+        this.inputEl.style.height = 'auto';
+        this.inputEl.style.height = Math.min(this.inputEl.scrollHeight, 120) + 'px';
+    }
+
+    rolarParaBaixo() {
+        this.mensagensEl.scrollTop = this.mensagensEl.scrollHeight;
     }
 }
 
-// Sugestões contextuais
-class SugestoesManager {
-    constructor() {
-        this.sugestoes = [
-            { texto: 'Como estou me sentindo', icone: '💭' },
-            { texto: 'Preciso desabafar', icone: '💬' },
-            { texto: 'Estou ansioso', icone: '😰' },
-            { texto: 'Quero relaxar', icone: '🧘' },
-            { texto: 'Me ajuda a pensar positivo', icone: '✨' },
-            { texto: 'Não sei o que fazer', icone: '🤔' }
-        ];
-
-        this.init();
-    }
-
-    init() {
-        this.renderSugestoes();
-    }
-
-    renderSugestoes() {
-        const container = document.getElementById('sugestoes-container');
-        if (!container) return;
-
-        container.innerHTML = this.sugestoes.map(s => `
-            <button class="sugestao-btn" data-texto="${s.texto}">
-                <span class="sugestao-icone">${s.icone}</span>
-                ${s.texto}
-            </button>
-        `).join('');
-
-        // Re-attach event listeners
-        const chatManager = window.chatManager;
-        if (chatManager) {
-            document.querySelectorAll('.sugestao-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const input = document.getElementById('chat-input');
-                    if (input) {
-                        input.value = btn.dataset.texto;
-                        chatManager.enviarMensagem();
-                    }
-                });
-            });
-        }
-    }
-}
-
-// Inicialização
 document.addEventListener('DOMContentLoaded', () => {
     window.chatManager = new ChatManager();
-    new SugestoesManager();
 });
